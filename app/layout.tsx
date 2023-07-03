@@ -1,6 +1,6 @@
-import { Nunito } from 'next/font/google';
+import {Nunito} from 'next/font/google';
 import ClientOnly from './components/ClientOnly';
-import Modal from './components/modals/Modal';
+import RegisterModal from './components/modals/RegisterModal';
 import Navbar from './components/navbar/Navbar';
 import './globals.css';
 const nunito = Nunito({subsets: ['latin']});
@@ -15,7 +15,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 		<html lang='en'>
 			<body className={nunito.className}>
 				<ClientOnly>
-					<Modal isOpen title="hoda salah" />
+					<RegisterModal />
 					<Navbar />
 				</ClientOnly>
 
