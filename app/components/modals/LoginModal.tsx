@@ -1,8 +1,7 @@
 'use client';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
-import useLoginModal from '@/app/hooks/useLoginModal';
-
-import axios from 'axios';
+import {signIn} from 'next-auth/react';
+import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 import {FieldValues, SubmitHandler, useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
@@ -11,25 +10,27 @@ import {FcGoogle} from 'react-icons/fc';
 import Button from '../Button';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
+import useLoginModal from './../../hooks/useLoginModal';
 import Modal from './Modal';
-const RegisterModal = () => {
+
+const LoginModal = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const registerModal = useRegisterModal();
-	const loginModal=useLoginModal()
+	const loginModal = useLoginModal();
+	const router = useRouter();
 	const {
 		register,
 		formState: {errors},
 		handleSubmit,
 	} = useForm<FieldValues>({
 		defaultValues: {
-			name: '',
 			email: '',
 			password: '',
 		},
 	});
 	const bodyContent = (
 		<div className='flex flex-col gap-4'>
-			<Heading title='Welcome to Airbnb' subtitle='Create an account' />
+			<Heading title='Welcome back' subtitle='Login to your  account' />
 			<Input
 				id='email'
 				label='Email'
@@ -38,14 +39,7 @@ const RegisterModal = () => {
 				errors={errors}
 				required
 			/>
-			<Input
-				id='name'
-				label='Name'
-				disabled={isLoading}
-				register={register}
-				errors={errors}
-				required
-			/>
+
 			<Input
 				id='password'
 				label='Password'
@@ -60,10 +54,7 @@ const RegisterModal = () => {
 	const footerContent = (
 		<div className='flex flex-col gap-4 mt-3'>
 			<hr />
-			<Button 
-				outline 
-				label='Continue With Google' 
-				icon={FcGoogle} />
+			<Button outline label='Continue With Google' icon={FcGoogle} />
 			<Button outline label='Continue With Github' icon={AiFillGithub} />
 			<div className='text-neutral-500 text-center font-light mt-4 '>
 				<div className='flex flex-row items-center justify-center gap-3'>
@@ -80,31 +71,32 @@ const RegisterModal = () => {
 	);
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		setIsLoading(true);
-		axios
-			.post('/api/register', data)
-			.then(() => {
-				console.log(data);
-				registerModal.onClose();
-				loginModal.onOpen()
-			})
-			.catch((error) => {
-				toast.error(error);
-			})
-			.finally(() => {
-				setIsLoading(false);
-			});
+		signIn('credentials', {
+			...data,
+			redirect: false,
+		}).then((res) => {
+			setIsLoading(false);
+			if (res?.ok) {
+				toast.success('logged in successfully');
+				loginModal.onClose();
+				router.refresh();
+			}
+			if (res?.error) {
+				toast.error('something went wrong');
+			}
+		});
 	};
 	return (
 		<Modal
 			disabled={isLoading}
-			isOpen={registerModal.isOpen}
-			title='Register'
+			isOpen={loginModal.isOpen}
+			title='Login'
 			actionLabel='Continue'
-			onClose={registerModal.onClose}
+			onClose={loginModal.onClose}
 			onSubmit={handleSubmit(onSubmit)}
 			body={bodyContent}
 			footer={footerContent}
 		/>
 	);
 };
-export default RegisterModal;
+export default LoginModal;
