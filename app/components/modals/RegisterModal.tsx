@@ -1,8 +1,9 @@
 'use client';
-import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
+import useRegisterModal from '@/app/hooks/useRegisterModal';
 
 import axios from 'axios';
+import {signIn} from 'next-auth/react';
 import {useState} from 'react';
 import {FieldValues, SubmitHandler, useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
@@ -15,7 +16,7 @@ import Modal from './Modal';
 const RegisterModal = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const registerModal = useRegisterModal();
-	const loginModal=useLoginModal()
+	const loginModal = useLoginModal();
 	const {
 		register,
 		formState: {errors},
@@ -60,11 +61,13 @@ const RegisterModal = () => {
 	const footerContent = (
 		<div className='flex flex-col gap-4 mt-3'>
 			<hr />
-			<Button 
-				outline 
-				label='Continue With Google' 
-				icon={FcGoogle} />
-			<Button outline label='Continue With Github' icon={AiFillGithub} />
+			<Button outline label='Continue With Google' icon={FcGoogle} />
+			<Button
+				onClick={() => signIn('github')}
+				outline
+				label='Continue With Github'
+				icon={AiFillGithub}
+			/>
 			<div className='text-neutral-500 text-center font-light mt-4 '>
 				<div className='flex flex-row items-center justify-center gap-3'>
 					<div>Already have an account</div>
@@ -85,7 +88,7 @@ const RegisterModal = () => {
 			.then(() => {
 				console.log(data);
 				registerModal.onClose();
-				loginModal.onOpen()
+				loginModal.onOpen();
 			})
 			.catch((error) => {
 				toast.error(error);

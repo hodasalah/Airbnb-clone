@@ -54,8 +54,13 @@ const LoginModal = () => {
 	const footerContent = (
 		<div className='flex flex-col gap-4 mt-3'>
 			<hr />
-			<Button outline label='Continue With Google' icon={FcGoogle} />
-			<Button outline label='Continue With Github' icon={AiFillGithub} />
+			<Button onClick={()=>signIn("google")} outline label='Continue With Google' icon={FcGoogle} />
+			<Button
+				outline
+				label='Continue With Github'
+				onClick={() => signIn('github')}
+				icon={AiFillGithub}
+			/>
 			<div className='text-neutral-500 text-center font-light mt-4 '>
 				<div className='flex flex-row items-center justify-center gap-3'>
 					<div>Already have an account</div>
@@ -67,7 +72,7 @@ const LoginModal = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		 </div>
 	);
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		setIsLoading(true);

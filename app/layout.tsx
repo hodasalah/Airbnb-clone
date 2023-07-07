@@ -1,4 +1,5 @@
-import { Nunito } from 'next/font/google';
+import {Nunito} from 'next/font/google';
+import getCurrentUser from './actions/getCurrentUser';
 import ClientOnly from './components/ClientOnly';
 import LoginModal from './components/modals/LoginModal';
 import RegisterModal from './components/modals/RegisterModal';
@@ -12,15 +13,20 @@ export const metadata = {
 	description: 'This is a clone  airbnb website with Nextjs and typescript',
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default async function RootLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
+	const currentUser = await getCurrentUser();
 	return (
 		<html lang='en'>
 			<body className={nunito.className}>
 				<ClientOnly>
 					<ToasterProvider />
-					<LoginModal/>
+					<LoginModal />
 					<RegisterModal />
-					<Navbar />
+					<Navbar currentUser={currentUser} />
 				</ClientOnly>
 
 				{children}

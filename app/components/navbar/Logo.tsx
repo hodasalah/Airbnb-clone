@@ -10,6 +10,7 @@ const Logo = () => {
 			height={100}
 			src='/images/logo-2.png'
 			className='hidden md:block cursor-pointer'
+			priority
 		/>
 	);
 };
