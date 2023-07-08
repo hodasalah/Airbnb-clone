@@ -2,7 +2,7 @@
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import {signIn} from 'next-auth/react';
 import {useRouter} from 'next/navigation';
-import {useState} from 'react';
+import {useState,useCallback} from 'react';
 import {FieldValues, SubmitHandler, useForm} from 'react-hook-form';
 import {toast} from 'react-hot-toast';
 import {AiFillGithub} from 'react-icons/ai';
@@ -28,6 +28,10 @@ const LoginModal = () => {
 			password: '',
 		},
 	});
+	const toggle=useCallback(()=>{
+		loginModal.onClose();
+		registerModal.onOpen()
+	},[loginModal,registerModal])
 	const bodyContent = (
 		<div className='flex flex-col gap-4'>
 			<Heading title='Welcome back' subtitle='Login to your  account' />
@@ -63,12 +67,12 @@ const LoginModal = () => {
 			/>
 			<div className='text-neutral-500 text-center font-light mt-4 '>
 				<div className='flex flex-row items-center justify-center gap-3'>
-					<div>Already have an account</div>
+					<div>First time using Airbnb</div>
 					<div
 						className='text-rose-600 cursor-pointer hover:underline'
-						onClick={registerModal.onClose}
+						onClick={toggle}
 					>
-						Login
+						Create An Account
 					</div>
 				</div>
 			</div>

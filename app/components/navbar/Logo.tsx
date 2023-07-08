@@ -11,6 +11,7 @@ const Logo = () => {
 			src='/images/logo-2.png'
 			className='hidden md:block cursor-pointer'
 			priority
+			onClick={()=>router.push("/")}
 		/>
 	);
 };
