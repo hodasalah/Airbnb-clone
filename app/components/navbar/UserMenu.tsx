@@ -1,6 +1,7 @@
 'use client';
 import useLoginModal from '@/app/hooks/useLoginModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
+import useRentModal from '@/app/hooks/useRentModal';
 
 import {SafeUser} from '@/app/types';
 import {signOut} from 'next-auth/react';
@@ -15,22 +16,30 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	console.log(currentUser)
+	const registerModal = useRegisterModal();
+	const loginModal = useLoginModal();
+	const rentModal=useRentModal();
 	const toggleOpen = useCallback(() => {
 		setIsOpen((value) => !value);
 	}, []);
-	const registerModal = useRegisterModal();
-	const loginModal = useLoginModal();
+	const onRent=useCallback(()=>{
+		if(!currentUser){
+			return loginModal.onOpen()
+		}
+		//open rentModal
+		rentModal.onOpen()
+	},[loginModal,currentUser,rentModal])
+
 	return (
 		<div className='relative'>
 			<div className='flex flex-row items-center gap-3'>
 				<div
-					onClick={toggleOpen}
+					onClick={onRent}
 					className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'
 				>
 					Airbnb your home
 				</div>
-				<div className='p-4 md:py-1 md:px-2 border-[1px] transition border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md'>
+				<div className='p-4 md:py-1 md:px-2 border-[1px] transition border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md' onClick={toggleOpen}>
 					<AiOutlineMenu />
 				</div>
 				<div className='hidden md:block'>
@@ -46,7 +55,7 @@ const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
 								<MenuItem onClick={() => {}} label='My Favorites' />
 								<MenuItem onClick={() => {}} label='My Reservations' />
 								<MenuItem onClick={() => {}} label='My Properties' />
-								<MenuItem onClick={() => {}} label='Airbnb my home' />
+								<MenuItem onClick={() => rentModal.onOpen()} label='Airbnb my home' />
 								<MenuItem onClick={() => signOut()} label='Logout' />
 							</>
 						) : (
