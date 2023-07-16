@@ -1,5 +1,4 @@
 'use client';
-
 import { formatISO } from 'date-fns';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -13,7 +12,7 @@ import Heading from '../Heading';
 import Calendar from "../inputs/Calendar";
 import Counter from "../inputs/Counter";
 import CountrySelect, {
-	countrySelectValue
+  CountrySelectValue
 } from "../inputs/CountrySelect";
 import Modal from "./Modal";
 
@@ -30,7 +29,7 @@ const SearchModal = () => {
 
   const [step, setStep] = useState(STEPS.LOCATION);
 
-  const [location, setLocation] = useState<countrySelectValue>();
+  const [location, setLocation] = useState<CountrySelectValue>();
   const [guestCount, setGuestCount] = useState(1);
   const [roomCount, setRoomCount] = useState(1);
   const [bathroomCount, setBathroomCount] = useState(1);
@@ -126,7 +125,7 @@ const SearchModal = () => {
       <CountrySelect 
         value={location} 
         onChange={(value) => 
-          setLocation(value as countrySelectValue)} 
+          setLocation(value as CountrySelectValue)} 
       />
       <hr />
       <Map center={location?.latlng} />
