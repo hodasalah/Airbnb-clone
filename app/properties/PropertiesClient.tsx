@@ -19,7 +19,7 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
 }) => {
 	const router = useRouter();
 	const [deletingId, setDeletingId] = useState('');
-	const onCancel = useCallback(
+	const onDelete = useCallback(
 		(id: string) => {
 			setDeletingId(id);
 			axios
