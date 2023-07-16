@@ -1,12 +1,12 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 import Container from '@/app/components/Container';
 import EmptyState from '@/app/components/EmptyState';
 import ListingCard from '@/app/components/listings/ListingCard';
 
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import getReservations from "@/app/actions/getReservations";
 import getListings, {IListingsParams} from '@/app/actions/getListings';
+import getReservations from '@/app/actions/getReservations';
 import ClientOnly from './components/ClientOnly';
 
 interface HomeProps {
@@ -16,7 +16,7 @@ interface HomeProps {
 const Home = async ({searchParams}: HomeProps) => {
 	const listings = await getListings(searchParams);
 	const currentUser = await getCurrentUser();
-	const reservations= await getReservations({userId:currentUser?.id})
+	const reservations = await getReservations({userId: currentUser?.id});
 
 	if (listings.length === 0) {
 		return (

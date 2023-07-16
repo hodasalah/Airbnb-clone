@@ -1,4 +1,4 @@
-import { Nunito } from 'next/font/google';
+import {Nunito} from 'next/font/google';
 import getCurrentUser from './actions/getCurrentUser';
 import ClientOnly from './components/ClientOnly';
 import LoginModal from './components/modals/LoginModal';
@@ -25,16 +25,13 @@ export default async function RootLayout({
 		<html lang='en'>
 			<body className={nunito.className}>
 				<ClientOnly>
-
 					<ToasterProvider />
-					<RentModal/>
+					<RentModal />
 					<LoginModal />
 					<RegisterModal />
 					<Navbar currentUser={currentUser} />
 				</ClientOnly>
-				<div className='pb-20 pt-28'>
-					{children}
-				</div>
+				<div className='pb-20 pt-28'>{children}</div>
 			</body>
 		</html>
 	);
