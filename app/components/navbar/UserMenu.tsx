@@ -3,11 +3,11 @@ import useLoginModal from '@/app/hooks/useLoginModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useRentModal from '@/app/hooks/useRentModal';
 
-import { SafeUser } from '@/app/types';
-import { signOut } from 'next-auth/react';
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from 'react';
-import { AiOutlineMenu } from 'react-icons/ai';
+import {SafeUser} from '@/app/types';
+import {signOut} from 'next-auth/react';
+import {useRouter} from 'next/navigation';
+import {useCallback, useState} from 'react';
+import {AiOutlineMenu} from 'react-icons/ai';
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
 
@@ -17,20 +17,20 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const router= useRouter();
+	const router = useRouter();
 	const registerModal = useRegisterModal();
 	const loginModal = useLoginModal();
-	const rentModal=useRentModal();
+	const rentModal = useRentModal();
 	const toggleOpen = useCallback(() => {
 		setIsOpen((value) => !value);
 	}, []);
-	const onRent=useCallback(()=>{
-		if(!currentUser){
-			return loginModal.onOpen()
+	const onRent = useCallback(() => {
+		if (!currentUser) {
+			return loginModal.onOpen();
 		}
 		//open rentModal
-		rentModal.onOpen()
-	},[loginModal,currentUser,rentModal])
+		rentModal.onOpen();
+	}, [loginModal, currentUser, rentModal]);
 
 	return (
 		<div className='relative'>
@@ -41,11 +41,14 @@ const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
 				>
 					Airbnb your home
 				</div>
-				<div className='p-4 md:py-1 md:px-2 border-[1px] transition border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md' onClick={toggleOpen}>
+				<div
+					className='p-4 md:py-1 md:px-2 border-[1px] transition border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md'
+					onClick={toggleOpen}
+				>
 					<AiOutlineMenu />
 				</div>
 				<div className='hidden md:block'>
-					<Avatar src={currentUser?.image}/>
+					<Avatar src={currentUser?.image} />
 				</div>
 			</div>
 			{isOpen && (
@@ -53,10 +56,19 @@ const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
 					<div className='flex flex-col cursor-pointer'>
 						{currentUser ? (
 							<>
-								<MenuItem onClick={() => router.push("/trips")} label='My Trips' />
-								<MenuItem onClick={() => router.push("/favorites")} label='My Favorites' />
-								<MenuItem onClick={() => router.push("/reservations")} label='My Reservations' />
-								<MenuItem onClick={() => router.push("/properties")} label='My Properties' />
+								<MenuItem onClick={() => router.push('/trips')} label='My Trips' />
+								<MenuItem
+									onClick={() => router.push('/favorites')}
+									label='My Favorites'
+								/>
+								<MenuItem
+									onClick={() => router.push('/reservations')}
+									label='My Reservations'
+								/>
+								<MenuItem
+									onClick={() => router.push('/properties')}
+									label='My Properties'
+								/>
 								<MenuItem onClick={() => rentModal.onOpen()} label='Airbnb my home' />
 								<MenuItem onClick={() => signOut()} label='Logout' />
 							</>
