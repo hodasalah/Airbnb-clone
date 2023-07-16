@@ -1,6 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 ## To See This Project
-[`CLICK ME`](https://airbnb-clone-two-pi.vercel.app/)
+[`CLICK ME TO SEE THIS PROJECT`](https://airbnb-clone-two-pi.vercel.app/)
 ## Getting Started
 
 First, run the development server:
