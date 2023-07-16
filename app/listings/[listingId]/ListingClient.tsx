@@ -1,20 +1,20 @@
 'use client';
 
 import axios from "axios";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { toast } from "react-hot-toast";
-import { Range } from "react-date-range";
-import { useRouter } from "next/navigation";
 import { differenceInDays, eachDayOfInterval } from 'date-fns';
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Range } from "react-date-range";
+import { toast } from "react-hot-toast";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 
 import Container from "@/app/components/Container";
-import { categories } from "@/app/components/navbar/Categories";
 import ListingHead from "@/app/components/listings/ListingHead";
 import ListingInfo from "@/app/components/listings/ListingInfo";
 import ListingReservation from "@/app/components/listings/ListingReservation";
+import { categories } from "@/app/components/navbar/Categories";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -112,6 +112,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
 
   return ( 
     <Container>
+      <h1> hello from here </h1>
       <div 
         className="
           max-w-screen-lg 
