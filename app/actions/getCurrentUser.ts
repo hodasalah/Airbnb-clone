@@ -8,7 +8,7 @@ export async function getSession() {
   return await getServerSession(authOptions)
 }
 
-eexport default async function getCurrentUser() {
+export default async function getCurrentUser() {
   try {
     const session = await getSession();
 
@@ -30,7 +30,7 @@ eexport default async function getCurrentUser() {
       ...currentUser,
       createdAt: currentUser.createdAt.toISOString(),
       updatedAt: currentUser.updatedAt.toISOString(),
-      emailVerified: 
+      emailVerified:
         currentUser.emailVerified?.toISOString() || null,
     };
   } catch (error: any) {
