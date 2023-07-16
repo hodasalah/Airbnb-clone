@@ -5,7 +5,7 @@ import EmptyState from '@/app/components/EmptyState';
 import ListingCard from '@/app/components/listings/ListingCard';
 
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import getListings, {IListingsParams} from '@/app/actions/getListings';
+import getListings, { IListingsParams } from '@/app/actions/getListings';
 import getReservations from '@/app/actions/getReservations';
 import ClientOnly from './components/ClientOnly';
 
@@ -16,7 +16,6 @@ interface HomeProps {
 const Home = async ({searchParams}: HomeProps) => {
 	const listings = await getListings(searchParams);
 	const currentUser = await getCurrentUser();
-	const reservations = await getReservations({userId: currentUser?.id});
 
 	if (listings.length === 0) {
 		return (
@@ -25,13 +24,7 @@ const Home = async ({searchParams}: HomeProps) => {
 			</ClientOnly>
 		);
 	}
-	if (reservations?.length === 0) {
-		return (
-			<ClientOnly>
-				<EmptyState showReset />
-			</ClientOnly>
-		);
-	}
+	
 
 	return (
 		<ClientOnly>
